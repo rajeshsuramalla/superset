@@ -38,6 +38,15 @@ MCP_FEATURE_FLAGS: Dict[str, Any] = {
     "MCP_SERVICE": True,
 }
 
+# List of preferred/allowed LLM models for MCP clients and proxies.
+# This is a lightweight, discoverable configuration that documents the
+# server's preferred models (for example, when you want clients or a
+# local proxy to prefer a particular model). It does NOT by itself
+# enforce server-side model selection; it is intended for clients and
+# proxy tooling (or orchestration) to consult. Override in
+# `superset_config.py` to customize for your deployment.
+MCP_ALLOWED_MODELS: list[str] = ["claude-haiku-4.5"]
+
 # MCP Service Host/Port
 MCP_SERVICE_HOST = "localhost"
 MCP_SERVICE_PORT = 5008

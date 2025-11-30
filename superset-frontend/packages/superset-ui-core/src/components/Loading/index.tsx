@@ -28,20 +28,27 @@ const SIZE_MAP: Record<SizeOption, string> = {
   l: '100px',
 };
 
-const LoaderWrapper = styled.div<{
+interface LoaderWrapperProps {
   $spinnerWidth: string;
   $spinnerHeight: string;
   $opacity: number;
-}>`
+}
+
+const LoaderWrapper = styled.div<LoaderWrapperProps>`
   z-index: 99;
-  width: ${({ $spinnerWidth }) => $spinnerWidth};
-  height: ${({ $spinnerHeight }) => $spinnerHeight};
-  opacity: ${({ $opacity }) => $opacity};
+  width: ${(props: LoaderWrapperProps) => props.$spinnerWidth};
+  height: ${(props: LoaderWrapperProps) => props.$spinnerHeight};
+  opacity: ${(props: LoaderWrapperProps) => props.$opacity};
   position: relative;
   margin: 0;
   padding: 0;
+  color: ${(props: any) => props.theme?.colorPrimary};
 
-  & > svg,
+  & > svg {
+    width: 100%;
+    height: 100%;
+  }
+
   & > img {
     width: 100%;
     height: 100%;
@@ -58,6 +65,10 @@ const LoaderWrapper = styled.div<{
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    opacity: ${(props: LoaderWrapperProps) => Math.min(props.$opacity * 1.5, 1)};
   }
 `;
 export function Loading({
