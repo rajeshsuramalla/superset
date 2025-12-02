@@ -116,9 +116,9 @@ PACKAGE_JSON_FILE = str(files("superset") / "static/assets/package.json")
 # },
 FAVICONS = [
     {
-        "href": "/static/assets/images/pointmatter-favicon.svg",
-        "sizes": "64x64",
-        "type": "image/svg+xml",
+        "href": "/static/assets/images/pm-fevicon.png",
+        "sizes": "32x32",
+        "type": "image/png",
         "rel": "icon",
     }
 ]
@@ -336,7 +336,8 @@ AUTH_RATE_LIMIT = "5 per second"
 APP_NAME = "PointMatter"
 
 # Specify the App icon
-APP_ICON = "/static/assets/images/pointmatter-logo-horiz.svg"
+# Use PointMatter branding logo (place `pm-logo.png` in the path below)
+APP_ICON = "/static/assets/images/pm-logo.png"
 
 # Specify where clicking the logo would take the user'
 # Default value of None will take you to '/superset/welcome'
