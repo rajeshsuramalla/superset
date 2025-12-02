@@ -62,6 +62,35 @@ docker exec -it superset-superset-light-1 superset init
 - MCP service is running on port 5008
 - Now configure Claude Desktop (see Step 2 below)
 
+### Prefer a specific Claude model (example)
+
+If you want Claude Desktop or other LLM clients to prefer a particular
+model (for example `claude-haiku-4.5`), you can include a preferred-model
+hint in the client's MCP configuration. This repository also exposes a
+lightweight server-side hint: the `MCP_ALLOWED_MODELS` list in
+`superset.mcp_service.mcp_config` (override in `superset_config.py` to
+customize for your deployment).
+
+Example `claude_desktop_config.json` entry (macOS path shown earlier):
+
+```json
+{
+  "mcpServers": {
+    "Superset MCP Proxy": {
+      "command": "~/github/superset/superset/mcp_service/run_proxy.sh",
+      "args": [],
+      "env": {},
+      "preferredModel": "claude-haiku-4.5"
+    }
+  }
+}
+```
+
+Note: `preferredModel` is a client-side hint — the MCP service itself
+does not force a particular model. The `MCP_ALLOWED_MODELS` config makes
+your server's preferred models discoverable to operators and client
+integrations.
+
 #### What Docker Compose does:
 - Sets up PostgreSQL database
 - Builds and runs Superset containers

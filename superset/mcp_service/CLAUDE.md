@@ -582,6 +582,15 @@ MCP_AUTH_ENABLED = True
 MCP_JWT_PUBLIC_KEY = "your_public_key"
 ```
 
+### Preferred models
+
+This MCP service exposes a lightweight hint variable `MCP_ALLOWED_MODELS`
+in `superset.mcp_service.mcp_config`. By default it contains
+`"claude-haiku-4.5"`. This list is intended as a discoverable server
+preference for integrators and local proxies — it does not enforce
+model selection on external clients. To customize, override
+`MCP_ALLOWED_MODELS` in your `superset_config.py`.
+
 ## Tool Discovery
 
 MCP clients discover tools via:

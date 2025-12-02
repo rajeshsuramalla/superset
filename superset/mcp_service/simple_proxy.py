@@ -20,11 +20,18 @@ Simple MCP proxy server that connects to FastMCP server on localhost:5008
 """
 
 import logging
+import os
 import signal
 import sys
 from typing import Any
 
 from fastmcp import FastMCP
+
+# Attempt to surface a server-preferred model to the proxy (non-enforcing hint).
+try:
+    from superset.mcp_service.mcp_config import MCP_ALLOWED_MODELS
+except Exception:
+    MCP_ALLOWED_MODELS = []
 
 # Configure logging
 logging.basicConfig(
@@ -60,6 +67,19 @@ def main() -> None:
         proxy = FastMCP.as_proxy("http://localhost:5008/mcp/", name="MCP Proxy")
 
         logger.info("Proxy created successfully, starting...")
+
+        # Determine preferred model: explicit env overrides config list
+        preferred_model = os.environ.get("MCP_PREFERRED_MODEL")
+        if not preferred_model and MCP_ALLOWED_MODELS:
+            preferred_model = MCP_ALLOWED_MODELS[0]
+
+        if preferred_model:
+            # Attach as a non-functional attribute (harmless) and log.
+            try:
+                proxy.preferred_model = preferred_model
+                logger.info("Proxy preferred model hint set: %s", preferred_model)
+            except Exception:
+                logger.debug("Could not set preferred_model attribute on proxy")
 
         # Run the proxy (this will block until interrupted)
         proxy.run()

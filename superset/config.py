@@ -114,7 +114,14 @@ PACKAGE_JSON_FILE = str(files("superset") / "static/assets/package.json")
 #     "type": "image/png"
 #     "rel": "icon"
 # },
-FAVICONS = [{"href": "/static/assets/images/favicon.png"}]
+FAVICONS = [
+    {
+        "href": "/static/assets/images/pm-fevicon.png",
+        "sizes": "32x32",
+        "type": "image/png",
+        "rel": "icon",
+    }
+]
 PDF_COMPRESSION_LEVEL: Literal["NONE", "FAST", "MEDIUM", "SLOW"] = "MEDIUM"
 
 
@@ -326,10 +333,11 @@ AUTH_RATE_LIMIT = "5 per second"
 # GLOBALS FOR APP Builder
 # ------------------------------
 # Uncomment to setup Your App name
-APP_NAME = "Superset"
+APP_NAME = "PointMatter"
 
 # Specify the App icon
-APP_ICON = "/static/assets/images/superset-logo-horiz.png"
+# Use PointMatter branding logo (place `pm-logo.png` in the path below)
+APP_ICON = "/static/assets/images/pm-logo.png"
 
 # Specify where clicking the logo would take the user'
 # Default value of None will take you to '/superset/welcome'
@@ -750,7 +758,7 @@ EXTRA_CATEGORICAL_COLOR_SCHEMES: list[dict[str, Any]] = []
 THEME_DEFAULT: Theme = {
     "token": {
         # Brand
-        "brandLogoAlt": "Apache Superset",
+        "brandLogoAlt": "PointMatter",
         "brandLogoUrl": APP_ICON,
         "brandLogoMargin": "18px 0",
         "brandLogoHref": "/",
@@ -766,7 +774,7 @@ THEME_DEFAULT: Theme = {
         "colorSuccess": "#5ac189",
         "colorInfo": "#66bcfe",
         # Fonts
-        "fontFamily": "Inter, Helvetica, Arial",
+        "fontFamily": "'Inter', Helvetica, Arial, sans-serif",
         "fontFamilyCode": "'Fira Code', 'Courier New', monospace",
         # Extra tokens
         "transitionTiming": 0.3,
