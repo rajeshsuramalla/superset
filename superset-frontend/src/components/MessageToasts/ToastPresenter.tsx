@@ -24,18 +24,24 @@ export interface VisualProps {
   position: 'bottom' | 'top';
 }
 
-const StyledToastPresenter = styled.div<VisualProps>(
-  ({ theme, position }) =>
-    // Single access to theme, using dot notation
-    `
+const StyledToastPresenter = styled.div<VisualProps>(({ theme, position }) => {
+  const verticalPosition = position === 'bottom' ? 'bottom' : 'top';
+  const verticalOffset = theme.sizeUnit * 6;
+  const horizontalPadding = theme.sizeUnit * 4;
+
+  return `
     max-width: 600px;
+    width: calc(100% - ${horizontalPadding * 2}px);
     position: fixed;
-    ${position === 'bottom' ? 'bottom' : 'top'}: 0px;
-    right: 0px;
-    margin-right: 50px;
-    margin-bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    ${verticalPosition}: ${verticalOffset}px;
+    padding: 0 ${horizontalPadding}px;
     z-index: ${theme.zIndexPopupBase + 1};
     word-break: break-word;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     .toast {
       padding: ${theme.sizeUnit * 4}px;
@@ -71,8 +77,8 @@ const StyledToastPresenter = styled.div<VisualProps>(
       opacity: 1;
       transform: translateY(0);
     }
-  `,
-);
+  `;
+});
 
 type ToastPresenterProps = Partial<VisualProps> & {
   toasts: Array<ToastMeta>;
@@ -82,7 +88,7 @@ type ToastPresenterProps = Partial<VisualProps> & {
 export default function ToastPresenter({
   toasts,
   removeToast,
-  position = 'bottom',
+  position = 'top',
 }: ToastPresenterProps) {
   return (
     <>

@@ -542,7 +542,7 @@ DEFAULT_FEATURE_FLAGS: dict[str, bool] = {
     "GLOBAL_ASYNC_QUERIES": False,
     "EMBEDDED_SUPERSET": False,
     # Enables Alerts and reports new implementation
-    "ALERT_REPORTS": False,
+    "ALERT_REPORTS": True,
     "ALERT_REPORT_TABS": False,
     "ALERT_REPORTS_FILTER": False,
     "ALERT_REPORT_SLACK_V2": False,
@@ -2297,3 +2297,13 @@ for env_var in ENV_VAR_KEYS:
     if env_var in os.environ:
         config_var = env_var.replace("SUPERSET__", "")
         globals()[config_var] = os.environ[env_var]
+
+# SMTP configuration for email reports and alerts
+EMAIL_NOTIFICATIONS = True
+SMTP_HOST = "smtp.office365.com"
+SMTP_STARTTLS = True
+SMTP_SSL = False
+SMTP_USER = "notify@pointmatter.com"
+SMTP_PORT = 587
+SMTP_PASSWORD = "GM//2025//04@loma!23"  # noqa: S105
+SMTP_MAIL_FROM = "notify@pointmatter.com"
